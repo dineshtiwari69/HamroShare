@@ -38,6 +38,7 @@ export default function AutoApplier() {
       setAvailbleIssue(data);
     });
     
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function addTerminalLogs(text,success) {
