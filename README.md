@@ -26,7 +26,8 @@ Trust me Broo, Everything Happens within a Client's Browser . Nothing Spooky.
 Yeah for web api there was a cors issue , but i later switched to Meroshare's Mobile Application API .
 ## Features
 
-- Cross Platform
+- Runs on Web Browser
+- Nothing Fishy , Everything's stored in Client Side (No Backend)
 - User Friendly
 - Automatic Batch Apply
 
