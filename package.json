@@ -1,5 +1,6 @@
 {
   "name": "hamroshare",
+  "homepage": "https://dineshtiwari69.github.io/HamroShare",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,6 +12,7 @@
     "autoprefixer": "^10.4.7",
     "bootstrap-icons": "^1.8.3",
     "flowbite": "^1.4.7",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.4.14",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -21,10 +23,13 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+    
   },
   "eslintConfig": {
     "extends": [
