@@ -50,7 +50,7 @@ Install dependencies
 ```bash
   yarn install
 ```
-
+Note : Remove homepage section from package.json
 Start the server
 
 ```bash
