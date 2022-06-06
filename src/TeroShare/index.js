@@ -190,8 +190,10 @@ const sendApplication = async (token,data) =>
     return resp;
   });
 
-const applyIPO = async (shareCode, addTerminalLogs) => {
+const applyIPO = async (shareCode,kitta, addTerminalLogs) => {
+  
   let accounts = fetchUserDetails();
+  addTerminalLogs("Applying "+kitta+" IPO From "+accounts.length+" Accounts")
   for (let i = 0; i < accounts.length; i++) {
     let data = accounts[i];
     addTerminalLogs("Applying From " + data.username + " .....");
@@ -204,7 +206,7 @@ const applyIPO = async (shareCode, addTerminalLogs) => {
       const toSendData = {
         accountBranchId: data.bankDetails.accountBranch.id,
         accountNumber: data.bankDetails.accountNumber,
-        appliedKitta: "10",
+        appliedKitta: kitta.toString(),
         bankId: data.bankDetails.bank.id,
         boid: data.personalDetails.boid,
         companyShareId: shareCode,

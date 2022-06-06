@@ -92,12 +92,26 @@ export default function AutoApplier() {
                   );
                 })}
             </select>
+            <label>Kittas</label>
+            <input
+              type="number"
+              name="kittas"
+              id="kittas"
+              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7  sm:text-sm bg-white border border-gray-400 hover:border-gray-500 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="10"
+              min={10}
+            />
             <button
               className="bg-ms-bg px-y py-2 p-6 rounded text-white mt-2"
               disabled={!readyToApply}
               onClick={() => {
+                let kittas = document.getElementById("kittas").value;
+                if(!kittas){
+                  kittas = 10;
+                }
                 applyIPO(
                   document.getElementById("applicableIssues").value,
+                  kittas,
                   addTerminalLogs
                 );
               }}
