@@ -30,6 +30,25 @@ export default function AddAccount() {
         let capital = e.target.capital.value;
 
         let pin = e.target.pinCode.value;
+        if(pin.length !== 4){
+            toast.error("Pin Must be 4 Digit.");
+            setIsLoggingIn(false);
+            return
+        }
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+        if(!isNumeric(pin)){
+            toast.error("Pin Must be Numeric");
+            setIsLoggingIn(false);
+            return
+        }
+        if(parseInt(pin) <0){
+            toast.error("Pin Must be Greater than zero");
+            setIsLoggingIn(false);
+            return
+
+        }
         let crn = e.target.crnNumber.value;
         if (accountExists(username)) {
             toast.error("Account already exists");
@@ -119,8 +138,8 @@ export default function AddAccount() {
                             </label>
 
                             <div class="inline-block relative w-full ">
-                                <input class="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pinCode" type="number" placeholder="Pin Code"  
-                                max={9999} min={1000}
+                                <input class="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pinCode" type="text" placeholder="Pin Code"  
+                               
                                 required/>
 
                             </div>
