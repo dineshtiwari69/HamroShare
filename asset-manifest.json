@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/HamroShare/static/css/main.13b92f20.css",
-    "main.js": "/HamroShare/static/js/main.0de155d5.js",
+    "main.js": "/HamroShare/static/js/main.f4bbd761.js",
     "static/media/bootstrap-icons.woff?": "/HamroShare/static/media/bootstrap-icons.7ff3ca6fa798de3f8ac2.woff",
     "static/media/bootstrap-icons.woff2?": "/HamroShare/static/media/bootstrap-icons.f2539a501be3a673de05.woff2",
     "index.html": "/HamroShare/index.html",
     "main.13b92f20.css.map": "/HamroShare/static/css/main.13b92f20.css.map",
-    "main.0de155d5.js.map": "/HamroShare/static/js/main.0de155d5.js.map"
+    "main.f4bbd761.js.map": "/HamroShare/static/js/main.f4bbd761.js.map"
   },
   "entrypoints": [
     "static/css/main.13b92f20.css",
-    "static/js/main.0de155d5.js"
+    "static/js/main.f4bbd761.js"
   ]
 }
