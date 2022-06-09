@@ -77,22 +77,22 @@ export default function AddAccount() {
 
 
     return (
-        <div class="grid place-items-center h-screen bg-ms-bg">
-            <div class="w-full max-w-md	">
-                <form class="bg-ms-bg shadow-2xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={submit}>
+        <div className="grid place-items-center h-screen bg-ms-bg">
+            <div className="w-full max-w-md	">
+                <form className="bg-ms-bg shadow-2xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={submit}>
                     {/* Centered Image */}
-                    <div class="flex items-center justify-center text-center">
+                    <div className="flex items-center justify-center text-center">
                         <img src={teroShare} alt="teroShare" />
                     </div>
-                    <div class="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg " role="alert">
+                    <div className="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg " role="alert">
                       We donot have a way to check your CRN and PinCode . Please double check it , else it will not work during the applying process.
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-white text-xs mb-2" for="username">
+                    <div className="mb-4">
+                        <label className="block text-white text-xs mb-2" for="username">
                             <HomeIcon className="h-4 w-4 inline mr-2 mb-1" />Depository Participants
                         </label>
-                        <div class="inline-block relative w-full">
-                            <select class="block appearance-none text-xs w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="capital" id="capital" required>
+                        <div className="inline-block relative w-full">
+                            <select className="block appearance-none text-xs w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="capital" id="capital" required>
                                 {capitals && capitals.map(capital => (
                                     <option key={capital.id} value={capital.id}>{capital.name} ({capital.code})</option>
                                 ))}
@@ -100,45 +100,45 @@ export default function AddAccount() {
 
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-white text-xs mb-2" for="username">
+                    <div className="mb-4">
+                        <label className="block text-white text-xs mb-2" for="username">
                             <UserIcon className="h-4 w-4 inline mr-2 mb-1" />Username
                         </label>
 
-                        <div class="inline-block relative w-full">
-                            <input class="shadow appearance-none border rounded text-xs w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required />
+                        <div className="inline-block relative w-full">
+                            <input className="shadow appearance-none border rounded text-xs w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" required />
 
                         </div>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-white text-xs mb-2" for="username">
+                    <div className="mb-4">
+                        <label className="block text-white text-xs mb-2" for="username">
                             <LockOpenIcon className="h-4 w-4 inline mr-2 mb-1 text-xs" />Password
                         </label>
 
-                        <div class="inline-block relative w-full">
-                            <input class="shadow text-xs appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" required />
+                        <div className="inline-block relative w-full">
+                            <input className="shadow text-xs appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" required />
 
                         </div>
                     </div>
                     <div className='md:flex'>
-                        <div class="mb-4 w-full">
-                            <label class="block text-white text-xs mb-2" for="username">
+                        <div className="mb-4 w-full">
+                            <label className="block text-white text-xs mb-2" for="username">
                                 <LockOpenIcon className="h-4 w-4 inline mr-2 mb-1 text-xs" />CRN number
                             </label>
 
-                            <div class="inline-block relative w-full">
-                                <input class="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="crnNumber" type="text" placeholder="CRN Number" required />
+                            <div className="inline-block relative w-full">
+                                <input className="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="crnNumber" type="text" placeholder="CRN Number" required />
 
                             </div>
                         </div>
-                        <div class="mb-4 w-full">
+                        <div className="mb-4 w-full">
 
-                            <label class="block text-white text-xs mb-2" for="username">
+                            <label className="block text-white text-xs mb-2" for="username">
                                 <LockOpenIcon className="h-4 w-4 inline mr-2 mb-1 text-xs" />Pin
                             </label>
 
-                            <div class="inline-block relative w-full ">
-                                <input class="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pinCode" type="text" placeholder="Pin Code"  
+                            <div className="inline-block relative w-full ">
+                                <input className="shadow appearance-none border text-xs rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="pinCode" type="text" placeholder="Pin Code"  
                                
                                 required/>
 
@@ -147,13 +147,13 @@ export default function AddAccount() {
 
                     </div>
 
-                    <div class="flex items-center justify-between">
-                        <button class="bg-ms-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" name="submit" type="submit" >
+                    <div className="flex items-center justify-between">
+                        <button className="bg-ms-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" name="submit" type="submit" >
                             {isLoggingIn ? 'Adding Account....' : 'Add Account'}
                         </button>
                     </div>
-                    <p class="text-center text-white text-sm mt-2 ">
-                        <Link to="/portal" class="hover:text-blue-600">
+                    <p className="text-center text-white text-sm mt-2 ">
+                        <Link to="/portal" className="hover:text-blue-600">
                             Take Me To Dashboard
                         </Link>
                     </p>

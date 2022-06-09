@@ -1,6 +1,8 @@
 import retry from "async-retry";
 import { fetchUserDetails } from "../helpers/storage";
 
+const BASEURI = "https://backend.cdsc.com.np"
+
 const login = async (clientId, username, password) =>
   retry(async () => {
     let json_data = {
@@ -8,7 +10,7 @@ const login = async (clientId, username, password) =>
       username: username,
       password: password,
     };
-    const res = await fetch("https://backend.cdsc.com.np/api/meroShare/auth/", {
+    const res = await fetch(`${BASEURI}/api/meroShare/auth/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -41,7 +43,7 @@ const login = async (clientId, username, password) =>
 
 const personalDetails = async (token) =>
   retry(async () => {
-    let URL = "https://backend.cdsc.com.np/api/meroShare/ownDetail/";
+    let URL = `${BASEURI}/api/meroShare/ownDetail/`;
     const res = await fetch(URL, {
       method: "GET",
       headers: {
@@ -63,7 +65,7 @@ const personalDetails = async (token) =>
 
 const boidDetails = async (token, boid) =>
   retry(async () => {
-    let URL = `https://backend.cdsc.com.np/api/meroShareView/myDetail/${boid}`;
+    let URL = `${BASEURI}/api/meroShareView/myDetail/${boid}`;
     const res = await fetch(URL, {
       method: "GET",
       headers: {
@@ -84,7 +86,7 @@ const boidDetails = async (token, boid) =>
 
 const bankDetails = async (token, bankCode) =>
   retry(async () => {
-    let URL = `https://backend.cdsc.com.np/api/bankRequest/${bankCode}`;
+    let URL = `${BASEURI}/api/bankRequest/${bankCode}`;
     const res = await fetch(URL, {
       method: "GET",
       headers: {
@@ -107,7 +109,7 @@ const bankDetails = async (token, bankCode) =>
 const getApplicableShares = async (token) =>
   retry(async () => {
     let URL =
-      "https://backend.cdsc.com.np/api/meroShare/companyShare/applicableIssue/";
+      `${BASEURI}/api/meroShare/companyShare/applicableIssue/`;
     const res = await fetch(URL, {
       headers: {
         accept: "application/json, text/plain, */*",
@@ -129,30 +131,36 @@ const getApplicableShares = async (token) =>
   });
 
 const getCustomerCode = async (token, code) =>
-  retry(async () => {
-    const res = await fetch(`https://backend.cdsc.com.np/api/meroShare/bank/${code}`,{
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    
-    const resp = await res.json();
-    const statusCode = res.status;
+  retry(
+    async () => {
+      const res = await fetch(
+        `${BASEURI}/api/meroShare/bank/${code}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        }
+      );
 
-    if (statusCode !== 200) {
-      console.log("error");
-      throw new Error(`Status Code ${statusCode}`);
-    }
+      const resp = await res.json();
+      const statusCode = res.status;
 
-    return resp;
-  },{retries:2});
+      if (statusCode !== 200) {
+        console.log("error");
+        throw new Error(`Status Code ${statusCode}`);
+      }
+
+      return resp;
+    },
+    { retries: 2 }
+  );
 
 const getCapitals = async () =>
   retry(async () => {
-    let URL = `https://backend.cdsc.com.np/api/meroShare/capital/`;
+    let URL = `${BASEURI}/api/meroShare/capital/`;
     const res = await fetch(URL);
     const resp = await res.json();
     const statusCode = res.status;
@@ -173,16 +181,15 @@ const getApplicableIssue = async () => {
   return applicableData;
 };
 
-const sendApplication = async (token,data) =>
+const sendApplication = async (token, data) =>
   retry(async () => {
-    let URL = `https://backend.cdsc.com.np/api/meroShare/applicantForm/share/apply`;
+    let URL = `${BASEURI}/api/meroShare/applicantForm/share/apply`;
     const res = await fetch(URL, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: token,
-
       },
       body: JSON.stringify(data),
     });
@@ -190,18 +197,22 @@ const sendApplication = async (token,data) =>
     return resp;
   });
 
-const applyIPO = async (shareCode,kitta, addTerminalLogs) => {
-  
+const applyIPO = async (shareCode, kitta, addTerminalLogs) => {
   let accounts = fetchUserDetails();
-  addTerminalLogs("Applying "+kitta+" IPO From "+accounts.length+" Accounts")
+  addTerminalLogs(
+    "Applying " + kitta + " IPO From " + accounts.length + " Accounts"
+  );
   for (let i = 0; i < accounts.length; i++) {
     let data = accounts[i];
     addTerminalLogs("Applying From " + data.username + " .....");
 
     const res = await login(data.clientId, data.username, data.password);
-    await new Promise(r => setTimeout(r, 2000));
-    try{
-      const applicableData = await getCustomerCode(res.token, data.bankDetails.bank.id);
+    await new Promise((r) => setTimeout(r, 2000));
+    try {
+      const applicableData = await getCustomerCode(
+        res.token,
+        data.bankDetails.bank.id
+      );
       let customerCode = applicableData.id;
       const toSendData = {
         accountBranchId: data.bankDetails.accountBranch.id,
@@ -215,17 +226,15 @@ const applyIPO = async (shareCode,kitta, addTerminalLogs) => {
         demat: data.boidDetails.boid,
         transactionPIN: data.pin,
       };
-      const applyResponse = await sendApplication(res.token,toSendData);
-      const error = applyResponse.status === "CONFLICT"
-      addTerminalLogs("Applied From " + data.username +" MESSAGE : "+applyResponse.message,!error);
+      const applyResponse = await sendApplication(res.token, toSendData);
+      const error = applyResponse.status === "CONFLICT";
+      addTerminalLogs(
+        "Applied From " + data.username + " MESSAGE : " + applyResponse.message,
+        !error
+      );
+    } catch (err) {
+      addTerminalLogs("Failed From " + data.username, false);
     }
-    catch(err){
-      addTerminalLogs("Failed From " + data.username ,false);
-
-    }
-    
-    
-
   }
 };
 
@@ -252,4 +261,64 @@ const teroshareLogin = async (clientId, username, password, pin, crn) =>
     return all_data;
   });
 
-export { getApplicableIssue, teroshareLogin, getCapitals, applyIPO };
+const getApplicationReport = async (data) =>
+  retry(async () => {
+    const token = await login(data.clientId, data.username, data.password);
+    let URL =
+    `${BASEURI}/api/meroShare/applicantForm/active/search/`;
+    const res = await fetch(URL, {
+      headers: {
+        accept: "application/json, text/plain, */*",
+        authorization: token.token,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        filterFieldParams: [
+          {
+            key: "companyShare.companyIssue.companyISIN.script",
+            alias: "Scrip",
+          },
+          {
+            key: "companyShare.companyIssue.companyISIN.company.name",
+            alias: "Company Name",
+          },
+        ],
+        page: 1,
+        size: 200,
+        searchRoleViewConstants: "VIEW_APPLICANT_FORM_COMPLETE",
+        filterDateParams: [
+          {
+            key: "appliedDate",
+            condition: "",
+            alias: "",
+            value: "",
+          },
+          {
+            key: "appliedDate",
+            condition: "",
+            alias: "",
+            value: "",
+          },
+        ],
+      }),
+      method: "POST",
+    });
+    
+    const statusCode = res.status;
+
+    if (statusCode !== 200) {
+      console.log("error");
+      throw new Error(`Status Code ${statusCode}`);
+    }
+    const resp = await res.json();
+
+    return resp;
+  });
+
+export {
+  getApplicableIssue,
+  teroshareLogin,
+  getCapitals,
+  applyIPO,
+  getApplicationReport,
+};

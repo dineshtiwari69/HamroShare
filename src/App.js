@@ -16,6 +16,7 @@ export default function App() {
         <Route path="/add-account" element={<AddAccount />} />
         <Route path="/portal" element={<Dashboard selectedTab="portal" />} />
         <Route path="/auto-apply" element={<Dashboard selectedTab="auto-apply" />} />
+        <Route path="/status" element={<Dashboard selectedTab="status" />} />
       </Routes>
     </Router>
 

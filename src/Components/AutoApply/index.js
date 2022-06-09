@@ -56,7 +56,7 @@ export default function AutoApplier() {
   return (
     <>
       <Navbar />
-      <div class="container mx-auto px-4 py-4 overflow-auto">
+      <div className="container mx-auto px-4 py-4 overflow-auto">
         <h1 className="font-ms-font text-msweight font-bold ">Auto Apply</h1>
         <h1 className="font-ms-font text-msx mb-4 font-regular ">
           One Click Applier
@@ -72,7 +72,7 @@ export default function AutoApplier() {
           <>
             <label>Select IPO</label>
             <select
-              class="block appearance-none text-xs w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="block appearance-none text-xs w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
               name="capital"
               id="applicableIssues"
               required
@@ -95,7 +95,7 @@ export default function AutoApplier() {
               type="number"
               name="kittas"
               id="kittas"
-              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7  sm:text-sm bg-white border border-gray-400 hover:border-gray-500 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7  sm:text-sm bg-white border border-gray-400 hover:border-gray-500 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
               placeholder="10"
               min={10}
             />
@@ -116,14 +116,14 @@ export default function AutoApplier() {
             >
               ⚙️ Start Applying
             </button>
-            <div class="w-full flex justify-center items-center mt-10">
-              <div class="w-full bg-ms-bg ">
-                <div class="w-full border-t-8 border-red-800 flex">
+            <div className="w-full flex justify-center items-center mt-10">
+              <div className="w-full bg-ms-bg ">
+                <div className="w-full border-t-8 border-red-800 flex">
                   <h1 className="font-ms-font text-msweight font-bold text-white px-5 py-5">
                     Terminal
                   </h1>
                 </div>
-                <div class="w-full border-t-4 border-black bg-black flex h-120 ">
+                <div className="w-full border-t-4 border-black bg-black flex h-120 ">
                   <div className="p-4" id="terminalLogs">
                     {terminalLogs.map((elem, index) => {
                       return (
