@@ -3,8 +3,10 @@ import Navbar from "../Navbar";
 import { fetchUserDetails } from "../../helpers/storage";
 import { Link } from "react-router-dom";
 import { getApplicableIssue, applyIPO } from "../../TeroShare";
+
 export default function AutoApplier() {
   const [userAccounts] = React.useState(fetchUserDetails());
+
   const [availbleIssue, setAvailbleIssue] = React.useState({});
   const [readyToApply, setReadyToApply] = React.useState(false);
   const [terminalLogs] = React.useState([
@@ -51,10 +53,6 @@ export default function AutoApplier() {
     document.getElementById("terminalLogs").appendChild(parentText);
   }
 
-  useEffect(() => {
-    console.log(terminalLogs);
-  }, [terminalLogs]);
-
   return (
     <>
       <Navbar />
@@ -63,12 +61,12 @@ export default function AutoApplier() {
         <h1 className="font-ms-font text-msx mb-4 font-regular ">
           One Click Applier
         </h1>
-        {userAccounts && userAccounts.length === 0 ? (
+        {!userAccounts ? (
           <Link
             to="/add-account"
             className="bg-ms-button text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
           >
-            Add Accounts
+            Add Atleast One Account to Use AutoApplier
           </Link>
         ) : (
           <>
@@ -106,7 +104,7 @@ export default function AutoApplier() {
               disabled={!readyToApply}
               onClick={() => {
                 let kittas = document.getElementById("kittas").value;
-                if(!kittas){
+                if (!kittas) {
                   kittas = 10;
                 }
                 applyIPO(
