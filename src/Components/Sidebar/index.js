@@ -8,6 +8,7 @@ import { Discord,Github } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ selectedTab }) {
+  console.log(selectedTab)
   return (
     <aside className="font-ms-font overflow-hidden">
       <div className="flex items-center justify-center shadow">
@@ -17,7 +18,7 @@ export default function Sidebar({ selectedTab }) {
         <li>
           <Link
             to="/portal"
-            className="flex items-center px-4 py-2 text-white  hover:bg-ms-hover hover:border-l-4 border-red-500"
+            className={`flex items-center px-4 py-2 text-white  hover:bg-ms-hover hover:border-l-4 border-red-500 ${selectedTab==="portal" ? 'bg-ms-hover border-l-4 border-red-500' : ''}`}
           >
             <HomeIcon className="h-5 w-5 " />
 
@@ -27,7 +28,7 @@ export default function Sidebar({ selectedTab }) {
         <li>
           <Link
             to="/auto-apply"
-            className="flex items-center px-4 py-2 text-white  hover:bg-ms-hover hover:border-l-4 border-red-500"
+            className={`flex items-center px-4 py-2 text-white  hover:bg-ms-hover hover:border-l-4 border-red-500 ${selectedTab==="auto-apply" ? 'bg-ms-hover border-l-4 border-red-500' : ''}`}
           >
             <IdentificationIcon className="h-5 w-5 " />
 
