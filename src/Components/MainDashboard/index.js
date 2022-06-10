@@ -19,7 +19,7 @@ export default function MainDash() {
                 <h1 className="font-ms-font text-msx font-regular ">Accounts you added will be displayed here</h1>
                 <div className="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg mt-2" role="alert">
                     <p>HamroShare is in no way affiliated with the CDS and Clearing Limited . This was made just for learning and testing purpose.</p>
-                    <p className="text-yellow-500">Lets Share Ideas and Progress ,<a href="https://discord.gg/PrxrbC9qTW">Join Our Discord Server </a>  </p>
+                    <p className="text-yellow-500 py-2">When Application is Rejected Due to Insuff Balance , The Site wont Reapply that account on next run . Please apply manually . (Will fix it in next update!) </p>
                     
                 </div>
 
