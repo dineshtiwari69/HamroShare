@@ -4,6 +4,7 @@ import React from "react"
 import MainDash from "../Components/MainDashboard"
 import AutoApplier from "../Components/AutoApply"
 import Status from "./Status"
+
 export default function Dashboard({selectedTab}) {
     
     return (

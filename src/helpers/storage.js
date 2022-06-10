@@ -9,6 +9,21 @@ function fetchUserDetails(){
 
 }
 
+function editUserDetails(username,pin,crn,password){
+    const userAccounts = fetchUserDetails();
+    for(let index in userAccounts){
+        const account = userAccounts[index];
+        if(account.username === username){
+            account.pin = pin;
+            account.crn = crn;
+            account.password = password;
+            userAccounts[index] = account
+            localStorage.setItem("credentials", JSON.stringify(userAccounts));
+        }
+    }
+
+}
+
 
 function addDetails(userData){
     //Check if key exists
@@ -59,4 +74,4 @@ function accountExists(username){
     
 }
 
-export {fetchUserDetails, addDetails, deleteAccount,accountExists};
+export {fetchUserDetails, addDetails, deleteAccount,accountExists,editUserDetails};

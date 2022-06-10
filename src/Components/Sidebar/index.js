@@ -1,16 +1,17 @@
-import React from "react";
+import React,{useState} from "react";
 import teroShare from "../../assets/images/teroshare.png";
-import { HomeIcon } from "@heroicons/react/solid";
+import { HomeIcon,TrashIcon } from "@heroicons/react/solid";
 import { IdentificationIcon } from "@heroicons/react/outline";
 import { CogIcon } from "@heroicons/react/outline";
 import { Discord,Github } from "react-bootstrap-icons";
-
+import ResetModal from "./ResetModal"
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ selectedTab }) {
-  console.log(selectedTab)
+  const [openModal,setOpenModal] = useState(false);
   return (
     <aside className="font-ms-font overflow-hidden">
+      <ResetModal  isOpen={openModal} setIsOpen={setOpenModal}/>
       <div className="flex items-center justify-center shadow">
         <img src={teroShare} alt="teroShare" width={189} height={149} />
       </div>
@@ -79,6 +80,21 @@ export default function Sidebar({ selectedTab }) {
             <span className="mx-4 text-sm">Source</span>
           </a>
         </li>
+        <li>
+          <div
+            
+            className="flex items-center px-4 py-2 text-white  hover:bg-ms-hover hover:border-l-4 border-red-500 hover:cursor-pointer"
+            onClick={()=>{
+              setOpenModal(true);
+            }}
+          >
+              
+              <TrashIcon  className="h-5 w-5 " />
+
+            <span className="mx-4 text-sm">Reset</span>
+          </div>
+        </li>
+        
       </ul>
     </aside>
   );
