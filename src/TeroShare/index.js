@@ -1,7 +1,12 @@
 import retry from "async-retry";
 import { fetchUserDetails } from "../helpers/storage";
 
-const BASEURI = "https://backend.cdsc.com.np"
+let BASEURI = "https://backend.cdsc.com.np"
+if(window.navigator.includes("Electron")){
+  console.log("ELECTRON CLient Detected, using web API ");
+  BASEURI = "https://webbackend.cdsc.com.np"
+
+}
 
 const login = async (clientId, username, password) =>
   retry(async () => {
