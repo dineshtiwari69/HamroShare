@@ -2,7 +2,7 @@ import retry from "async-retry";
 import { fetchUserDetails } from "../helpers/storage";
 
 let BASEURI = "https://backend.cdsc.com.np"
-if(window.navigator.includes("Electron")){
+if(navigator.userAgent.includes("Electron")){
   console.log("ELECTRON CLient Detected, using web API ");
   BASEURI = "https://webbackend.cdsc.com.np"
 
