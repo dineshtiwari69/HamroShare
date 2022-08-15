@@ -10,7 +10,7 @@ I am not a professional ReactJS Dev . Saying that , i hope i am not bullied for 
 
 ## 🚀 Live Demo
 
-https://github.com/dineshtiwari69/HamroShare
+https://dineshtiwari69.github.io/HamroShare/
 
 ## Preview
 ![Preview](src/assets/images/preview.png)
