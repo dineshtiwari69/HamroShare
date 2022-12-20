@@ -7,14 +7,16 @@ import { Discord,Github } from "react-bootstrap-icons";
 import ResetModal from "./ResetModal"
 import { Link } from "react-router-dom";
 
+
 export default function Sidebar({ selectedTab }) {
   const [openModal,setOpenModal] = useState(false);
   return (
-    <aside className="font-ms-font overflow-hidden">
+    <aside className="font-ms-font overflow-hidden hidden md:block" id="sideBarAside">
       <ResetModal  isOpen={openModal} setIsOpen={setOpenModal}/>
       <div className="flex items-center justify-center shadow">
         <img src={teroShare} alt="teroShare" width={189} height={149} />
       </div>
+      
       <ul className="mt-5">
         <li>
           <Link
