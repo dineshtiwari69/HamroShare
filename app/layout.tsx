@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/providers/theme-provider'
 const inter = Inter({ subsets: ['latin'] })
 import { Toaster } from "@/components/ui/toaster"
 import Header from '@/components/Header'
+import { Analytics } from '@vercel/analytics/react';
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-
+      <Analytics />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Toaster />
           <Header />
