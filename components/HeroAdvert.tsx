@@ -8,7 +8,7 @@ export default function HeroAdvert() {
     return (
         <div className='md:flex relative p-10' >
             <div className='relative'>
-                <img src='/char.png' className='animate-pulse w-[80%]' />
+                <img src='/char.png' className='animate-pulse w-[80%]' alt='Hamroshare' />
 
                 
 

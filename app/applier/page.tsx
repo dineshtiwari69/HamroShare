@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 "use client"
 
 
@@ -33,7 +34,7 @@ export default function Applier() {
             const account = accounts[i];
             //@ts-ignore
             let message: JSX.Element = <TerminalOutput key={i + 1}>[+] Applying through {account}...</TerminalOutput>
-            //append to terminal
+            
             setTerminalLineData(prevArray => [...prevArray, message]);
             const findAccountByDemat = clientData.find((client) => client.personalDetails.demat === account);
 
@@ -53,8 +54,8 @@ export default function Applier() {
             }
             catch (err) {
                 //@ts-ignore
-                message = <TerminalOutput><span className='text-red-500'>[-] Error applying through {account} {err.message ? err.message : err.toString()}</span>.</TerminalOutput>
-                //append to terminal
+                message = <TerminalOutput><span className='text-red-500' >[-] Error applying through {account} {err.message ? err.message : err.toString()}</span>.</TerminalOutput>
+               
                 setTerminalLineData(prevArray => [...prevArray, message]);
             }
 

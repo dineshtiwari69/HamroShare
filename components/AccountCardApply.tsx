@@ -42,7 +42,7 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
 
 
         })
-    }, [])
+    }, [items])
 
 
     function selectAll() {
