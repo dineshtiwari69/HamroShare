@@ -1,7 +1,7 @@
 "use client"
 
 
-import * as z from "zod"
+import { Skeleton } from "./ui/skeleton"
 import useLocalStorage from "use-local-storage"
 import { ClientData } from "@/interfaces/Meroshare"
 import { Button } from "@/components/ui/button"
@@ -20,9 +20,11 @@ import {
 
 import { Label } from "./ui/label"
 import { useEffect, useState } from "react"
-
+import { useAtomValue } from "jotai"
+import { privacyMode } from "@/atoms/atoms"
 export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { batchApply: (accounts: string[]) => void, applying: boolean, setSelectedIpo_: React.Dispatch<React.SetStateAction<string | null>> }) {
 
+    const isPrivate = useAtomValue(privacyMode)
     const [items] = useLocalStorage<ClientData[]>("credentials", []);
     const [selectedAccounts, setSelectedAccounts] = useState<string[]>([]);
 
@@ -47,14 +49,14 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
 
     function selectAll() {
 
-       
+
 
         setSelectedAccounts(items.map((item) => item.personalDetails.demat))
     }
 
 
 
-        
+
 
 
 
@@ -83,7 +85,8 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
                         <SelectGroup>
                             <SelectLabel>Applicable IPOs</SelectLabel>
                             {applicableShares.map((share, index) => (
-                                <SelectItem value={share.companyShareId.toString()} key={index}>{share.scrip} ({share.shareGroupName}) </SelectItem>
+                                <SelectItem value={share.companyShareId.toString()} key={index}>
+                                    {share.scrip} ({share.shareGroupName}) </SelectItem>
                             ))}
 
 
@@ -107,9 +110,20 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
 
                     />
                     <div className="space-y-1 leading-none">
-                        <Label>
-                            {item.personalDetails.demat}
-                        </Label>
+                        {isPrivate ?
+                            <Skeleton >
+
+                                <Label className="invisible">
+
+                                    {item.personalDetails.demat}
+                                </Label>
+
+                            </Skeleton> :
+                            <Label>
+
+                                {item.personalDetails.demat}
+                            </Label>
+                        }
 
 
                     </div>

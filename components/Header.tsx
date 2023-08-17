@@ -3,7 +3,7 @@ import React from 'react'
 import { ThemeToggle } from './theme-toggle'
 import { NavigationMenuDemo } from './NavigationMenu'
 import Image from 'next/image'
-
+import { PrivacyToggle } from './privacy-toggle'
 export default function Header() {
 
 
@@ -27,6 +27,7 @@ export default function Header() {
 
                     <div>
                         <ThemeToggle />
+                        <PrivacyToggle />
 
 
                     </div>
