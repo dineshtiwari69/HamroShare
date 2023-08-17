@@ -22,7 +22,7 @@ import {
           <div className="space-y-1">
             <CardTitle className="text-sm md:text-2xl ">dineshtiwari69/hamroshare</CardTitle>
             <CardDescription>
-            HamroShare's clever hack simplifies the process, letting you apply for IPOs across all your accounts at once.
+           {" HamroShare's"} clever hack simplifies the process, letting you apply for IPOs across all your accounts at once.
             </CardDescription>
           </div>
           <div className="flex items-center space-x-1 ml-auto rounded-md bg-secondary text-secondary-foreground">
