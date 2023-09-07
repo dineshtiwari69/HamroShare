@@ -20,7 +20,8 @@ export default function Applier() {
         <TerminalOutput key={0}>Hamroshare Batch Applier Ready!</TerminalOutput>,
     ]);
 
-    async function batchApply(accounts: string[]) {
+    async function batchApply(accounts: string[],quantity : number = 10) {
+       
         setApplying(true);
         //@ts-ignore
 
@@ -33,7 +34,7 @@ export default function Applier() {
         for (let i = 0; i < accounts.length; i++) {
             const account = accounts[i];
             //@ts-ignore
-            let message: JSX.Element = <TerminalOutput key={i + 1}>[+] Applying through {account}...</TerminalOutput>
+            let message: JSX.Element = <TerminalOutput key={i + 1}>[+] Applying {quantity} IPO through {account}...</TerminalOutput>
             
             setTerminalLineData(prevArray => [...prevArray, message]);
             const findAccountByDemat = clientData.find((client) => client.personalDetails.demat === account);
@@ -46,7 +47,7 @@ export default function Applier() {
                 continue;
             }
             try {
-                const data = await ApplyShare(findAccountByDemat, 10, Number(selectedIpo));
+                const data = await ApplyShare(findAccountByDemat, quantity, Number(selectedIpo));
                 //@ts-ignore
                 message = <TerminalOutput >[+] Applied through {account}. {data.message}</TerminalOutput>
                 //append to terminal

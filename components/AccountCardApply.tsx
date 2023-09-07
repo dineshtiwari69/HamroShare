@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { GetApplicableSharesMulti } from "@/lib/actions/meroshare"
 import { CompanyShare } from "@/interfaces/Meroshare"
+import { Input } from "@/components/ui/input"
+
 import {
     Select,
     SelectContent,
@@ -22,9 +24,11 @@ import { Label } from "./ui/label"
 import { useEffect, useState } from "react"
 import { useAtomValue } from "jotai"
 import { privacyMode } from "@/atoms/atoms"
-export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { batchApply: (accounts: string[]) => void, applying: boolean, setSelectedIpo_: React.Dispatch<React.SetStateAction<string | null>> }) {
+
+export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { batchApply: (accounts: string[],quantity:number  ) => void, applying: boolean, setSelectedIpo_: React.Dispatch<React.SetStateAction<string | null>> }) {
 
     const isPrivate = useAtomValue(privacyMode)
+    const [applyQuantity,setApplyQuantity] = useState<number>(10);
     const [items] = useLocalStorage<ClientData[]>("credentials", []);
     const [selectedAccounts, setSelectedAccounts] = useState<string[]>([]);
 
@@ -94,7 +98,24 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
                     </SelectContent>
                 </Select>
             </div>
-            <Button variant={"outline"} className="mb-2 align-right" onClick={selectAll}>Select All</Button>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+         
+                <Input type="number" id="quantity" className="w-full mb-2" placeholder="Quantity (Default 10)" min={10} onChange={
+                    (e)=>{
+                        const quantity = e.target.value;
+                        if(quantity){
+                            setApplyQuantity(Number(quantity))
+                            console.log("setQuantity",quantity)
+                        }
+                    }
+                } />
+            </div>
+
+            <div className="flex gap-2">
+                <Button variant={"outline"} className="mb-2 align-right" onClick={selectAll}>Select All</Button>
+
+            </div>
+
             {items.map((item, index) => (
                 <div className="flex mb-2 flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow" key={index}>
                     <Checkbox
@@ -130,7 +151,7 @@ export function AccountCardForm({ batchApply, applying, setSelectedIpo_ }: { bat
                 </div>
             ))}
             <Button className="mt-4 w-full" variant="secondary" disabled={selectedAccounts.length == 0 || applying || selectedIpo === null} onClick={() => {
-                batchApply(selectedAccounts);
+                batchApply(selectedAccounts,applyQuantity);
             }}>
                 Apply
             </Button>
