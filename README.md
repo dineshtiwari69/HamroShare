@@ -5,7 +5,7 @@ HamroShare is a minimal web-application that lets you apply for IPOs from multip
 
 
 
-![Logo](public/hamroshare.png)
+![Logo](public/logo_v2.png)
 
 ## 🚀 Live Demo
 
