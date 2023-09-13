@@ -9,7 +9,7 @@ HamroShare is a minimal web-application that lets you apply for IPOs from multip
 
 ## 🚀 Live Demo
 
-https://dineshtiwari69.github.io/HamroShare/
+https://hamro-share.vercel.app/
 
 ## Preview
 ![Preview](public/HamroShare-Apply-for-an-ipo-through-multiple-meroshare-accounts-at-once-.png)
