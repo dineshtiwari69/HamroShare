@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# ⚙️ HamroShare : Batch IPO Applier
 
-First, run the development server:
+HamroShare is a minimal web-application that lets you apply for IPOs from multiple meroshare accounts at once.
+
+
+
+![Logo](public/hamroshare.png)
+
+## 🚀 Live Demo
+
+https://dineshtiwari69.github.io/HamroShare/
+
+## Preview
+![Preview](public/HamroShare-Apply-for-an-ipo-through-multiple-meroshare-accounts-at-once-.png)
+
+## FAQ
+
+#### Is it Safe ?
+
+Yes it is safe from the Account Stealing Aspect , but i don't know whats the CDSC's 
+tos isfor the use of such Automation Software. Code is open-source , 
+you can look at it yourself , build it yourself if you dont trust the existing build.
+
+#### Are there any spooky backend API Linked With It ?
+
+In the previous version , we were using meroshare's mobile api but now since they enabled cors restriction on their api , it wasn't possible without using serverside reverse proxy. We are using next.js api to bypass cors so technically there is a serverside involved .
+
+
+## Features
+
+- Runs on Web Browser
+- User Friendly
+- Automatic Batch Apply
+- Quanity Selection/Account Selection
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+  git clone https://github.com/dineshtiwari69/HamroShare
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd HamroShare
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  yarn install
+```
+Start the server
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  yarn dev
+```
