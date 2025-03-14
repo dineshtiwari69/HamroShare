@@ -1,5 +1,7 @@
 import { ClientData } from "@/interfaces/Meroshare";
 
+const BASE_URL = "https://webbackend.cdsc.com.np";
+
 export async function ClientLogin(
   clientId: number,
   username: string,
@@ -11,7 +13,7 @@ export async function ClientLogin(
       username: username,
       password: password,
     };
-    fetch(`/api/meroShare/auth/`, {
+    fetch(`${BASE_URL}/api/meroShare/auth/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,8 +41,8 @@ export async function ClientLogin(
 
 export async function GetClientDetails(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    // let URL = `/api/meroShare/ownDetail/`;
-    let URL = `https://webbackend.cdsc.com.np/api/meroShare/ownDetail/`;
+
+    let URL = `${BASE_URL}/api/meroShare/ownDetail/`;
 
     fetch(URL, {
       method: "GET",
@@ -72,7 +74,8 @@ export async function GetClientBOIDData(
   boid: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `https://webbackend.cdsc.com.np/api/meroShareView/myDetail/${boid}`;
+
+    let URL = `${BASE_URL}/api/meroShareView/myDetail/${boid}`;
     fetch(URL, {
       method: "GET",
       headers: {
@@ -102,7 +105,8 @@ export async function GetClientBankDetails(
   bankCode: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `https://webbackend.cdsc.com.np/api/bankRequest/${bankCode}`;
+
+    let URL = `${BASE_URL}/api/bankRequest/${bankCode}`;
     fetch(URL, {
       method: "GET",
       headers: {
@@ -129,7 +133,8 @@ export async function GetClientBankDetails(
 
 export async function GetApplicableShares(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `https://webbackend.cdsc.com.np/api/meroShare/companyShare/applicableIssue/`;
+
+    let URL = `${BASE_URL}/api/meroShare/companyShare/applicableIssue/`;
     fetch(URL, {
       method: "POST",
       headers: {
@@ -149,7 +154,6 @@ export async function GetApplicableShares(token: string): Promise<any> {
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -161,7 +165,8 @@ export async function GetCustomerCode(
   code: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `https://webbackend.cdsc.com.np/api/meroShare/bank/${code}`;
+
+    let URL = `${BASE_URL}/api/meroShare/bank/${code}`;
 
     fetch(URL, {
       method: "GET",
@@ -181,7 +186,6 @@ export async function GetCustomerCode(
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -207,7 +211,8 @@ interface ApplyIPO {
 
 export async function ApplyIPO(data: ApplyIPO) {
   return new Promise((resolve, reject) => {
-    let URL = `https://webbackend.cdsc.com.np/api/meroShare/applicantForm/share/apply`;
+
+    let URL = `${BASE_URL}/api/meroShare/applicantForm/share/apply`;
     //remove token from data
     const postData = { ...data };
     console.log("PostData:", postData);
@@ -245,8 +250,6 @@ export async function ApplyIPO(data: ApplyIPO) {
 export async function GetApplicableSharesMulti(
   accounts: ClientData[]
 ): Promise<any> {
-  /// make fetch request for each account and return the result as soon as one of them is successfull
-
   return new Promise((resolve, reject) => {
     accounts.forEach((account) => {
       ClientLogin(
