@@ -1,5 +1,7 @@
 import { ClientData } from "@/interfaces/Meroshare";
 
+const BASE_URL = "https://webbackend.cdsc.com.np";
+
 export async function ClientLogin(
   clientId: number,
   username: string,
@@ -11,7 +13,7 @@ export async function ClientLogin(
       username: username,
       password: password,
     };
-    fetch(`/api/meroShare/auth/`, {
+    fetch(`${BASE_URL}/api/meroShare/auth/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,11 +41,13 @@ export async function ClientLogin(
 
 export async function GetClientDetails(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `/api/meroShare/ownDetail/`;
+
+    let URL = `${BASE_URL}/api/meroShare/ownDetail/`;
+
     fetch(URL, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: token,
       },
@@ -58,8 +62,8 @@ export async function GetClientDetails(token: string): Promise<any> {
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
+        console.error("Error in GetClientDetails:", error);
         reject(error);
       });
   });
@@ -70,11 +74,12 @@ export async function GetClientBOIDData(
   boid: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `/api/meroShareView/myDetail/${boid}`;
+
+    let URL = `${BASE_URL}/api/meroShareView/myDetail/${boid}`;
     fetch(URL, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: token,
       },
@@ -89,7 +94,6 @@ export async function GetClientBOIDData(
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -101,11 +105,12 @@ export async function GetClientBankDetails(
   bankCode: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `/api/bankRequest/${bankCode}`;
+
+    let URL = `${BASE_URL}/api/bankRequest/${bankCode}`;
     fetch(URL, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: token,
       },
@@ -120,7 +125,6 @@ export async function GetClientBankDetails(
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -129,11 +133,12 @@ export async function GetClientBankDetails(
 
 export async function GetApplicableShares(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `/api/meroShare/companyShare/applicableIssue/`;
+
+    let URL = `${BASE_URL}/api/meroShare/companyShare/applicableIssue/`;
     fetch(URL, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: token,
       },
@@ -149,7 +154,6 @@ export async function GetApplicableShares(token: string): Promise<any> {
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -161,12 +165,13 @@ export async function GetCustomerCode(
   code: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    let URL = `/api/meroShare/bank/${code}`;
+
+    let URL = `${BASE_URL}/api/meroShare/bank/${code}`;
 
     fetch(URL, {
       method: "GET",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: token,
       },
@@ -181,7 +186,6 @@ export async function GetCustomerCode(
           reject("Meroshare Server Failed.");
         }
       })
-
       .catch((error) => {
         reject(error);
       });
@@ -191,12 +195,15 @@ export async function GetCustomerCode(
 interface ApplyIPO {
   accountBranchId: number;
   accountNumber: string;
+  accountTypeId: number;
   appliedKitta: string;
   bankId: number;
   boid: string;
   companyShareId: number;
   crnNumber: string;
-  customerId: string;
+  /*it uses name as "CustomerId" but i found out that , actually its the id of the bank */
+  customerId: number;
+  customerCode: string;
   demat: string;
   transactionPIN: string;
   token?: string;
@@ -204,19 +211,21 @@ interface ApplyIPO {
 
 export async function ApplyIPO(data: ApplyIPO) {
   return new Promise((resolve, reject) => {
-    let URL = `/api/meroShare/applicantForm/share/apply`;
+
+    let URL = `${BASE_URL}/api/meroShare/applicantForm/share/apply`;
     //remove token from data
     const postData = { ...data };
+    console.log("PostData:", postData);
     delete postData.token;
 
     fetch(URL, {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
         Authorization: data.token ? data.token : "",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(postData),
     })
       .then((res) => {
         const statusCode = res.status;
@@ -241,8 +250,6 @@ export async function ApplyIPO(data: ApplyIPO) {
 export async function GetApplicableSharesMulti(
   accounts: ClientData[]
 ): Promise<any> {
-  /// make fetch request for each account and return the result as soon as one of them is successfull
-
   return new Promise((resolve, reject) => {
     accounts.forEach((account) => {
       ClientLogin(
@@ -280,16 +287,22 @@ export async function ApplyShare(
 
         GetCustomerCode(token, bankCode.toString())
           .then((data) => {
-            let customerCode = data.id;
+            console.log("Get Customer Code:", data);
+
+            let customerCode = data[0].id;
+            let accountTypeId = data[0].accountTypeId;
             const prepareData = {
               accountBranchId: account.bankDetails.branch.id,
               accountNumber: account.bankDetails.accountNumber,
+              accountTypeId: accountTypeId,
               appliedKitta: kitta.toString(),
+              /*it usees name as "CustomerId" but i found out that , actually its the id of the bank */
+              customerId: customerCode,
               bankId: account.bankDetails.bank.id,
               boid: account.personalDetails.boid,
               companyShareId: companyShareId,
               crnNumber: account.crn,
-              customerId: customerCode,
+              customerCode: customerCode,
               demat: account.boidDetails.boid,
               transactionPIN: account.pin,
               token: token,
