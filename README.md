@@ -9,7 +9,7 @@ HamroShare is a minimal web-application that lets you apply for IPOs from multip
 
 ## 🚀 Live Demo
 
-https://hamro-share.vercel.app/
+https://hamroshare.dineshtiwari.com.np
 
 ## Preview
 ![Preview](public/HamroShare-Apply-for-an-ipo-through-multiple-meroshare-accounts-at-once-.png)
@@ -34,7 +34,7 @@ In the previous version , we were using meroshare's mobile api but now since the
 - Automatic Batch Apply
 - Quanity Selection/Account Selection
 
-## Run Locally
+## Run Locally 
 
 Clone the project
 
@@ -58,3 +58,36 @@ Start the server
 ```bash
   yarn dev
 ```
+
+
+## Run Locally with Docker
+
+Clone the project
+
+```bash
+  git clone https://github.com/dineshtiwari69/HamroShare
+```
+
+Go to the project directory
+
+```bash
+  cd HamroShare
+```
+
+Build Docker Image
+
+```bash
+  docker build -t hamroshare .
+```
+Spin up the container
+
+```bash
+  docker run -p 3000:3000 hamroshare
+```
+
+## Contributors
+
+Thanks to the following people who have contributed to this project:
+
+- [Sandip Bajagain](https://github.com/Sandipbgn) 
+
