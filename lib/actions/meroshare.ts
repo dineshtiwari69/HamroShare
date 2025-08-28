@@ -41,7 +41,6 @@ export async function ClientLogin(
 
 export async function GetClientDetails(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-
     let URL = `${BASE_URL}/api/meroShare/ownDetail/`;
 
     fetch(URL, {
@@ -74,7 +73,6 @@ export async function GetClientBOIDData(
   boid: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-
     let URL = `${BASE_URL}/api/meroShareView/myDetail/${boid}`;
     fetch(URL, {
       method: "GET",
@@ -105,7 +103,6 @@ export async function GetClientBankDetails(
   bankCode: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-
     let URL = `${BASE_URL}/api/bankRequest/${bankCode}`;
     fetch(URL, {
       method: "GET",
@@ -133,7 +130,6 @@ export async function GetClientBankDetails(
 
 export async function GetApplicableShares(token: string): Promise<any> {
   return new Promise((resolve, reject) => {
-
     let URL = `${BASE_URL}/api/meroShare/companyShare/applicableIssue/`;
     fetch(URL, {
       method: "POST",
@@ -165,7 +161,6 @@ export async function GetCustomerCode(
   code: string
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-
     let URL = `${BASE_URL}/api/meroShare/bank/${code}`;
 
     fetch(URL, {
@@ -209,13 +204,47 @@ interface ApplyIPO {
   token?: string;
 }
 
-export async function ApplyIPO(data: ApplyIPO) {
-  return new Promise((resolve, reject) => {
+//209945365
 
+export async function getApplicationReports(token: string) {
+  const url = `${BASE_URL}/api/meroShare/applicantForm/active/search/`;
+
+  const payload = {
+    filterFieldParams: [
+      { key: "companyShare.companyIssue.companyISIN.script", alias: "Scrip" },
+      {
+        key: "companyShare.companyIssue.companyISIN.company.name",
+        alias: "Company Name",
+      },
+    ],
+    page: 1,
+    size: 200,
+    searchRoleViewConstants: "VIEW_APPLICANT_FORM_COMPLETE",
+    filterDateParams: [
+      { key: "appliedDate", condition: "", alias: "", value: "" },
+      { key: "appliedDate", condition: "", alias: "", value: "" },
+    ],
+  };
+
+  const resp = await fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return resp.json();
+}
+
+export async function ApplyIPO(data: ApplyIPO, reapply: boolean = false) {
+  return new Promise((resolve, reject) => {
     let URL = `${BASE_URL}/api/meroShare/applicantForm/share/apply`;
     //remove token from data
     const postData = { ...data };
-    console.log("PostData:", postData);
+
     delete postData.token;
 
     fetch(URL, {
@@ -235,7 +264,63 @@ export async function ApplyIPO(data: ApplyIPO) {
           });
         } else if (statusCode === 409) {
           return res.json().then((resp) => {
-            reject(resp);
+           
+            if (resp.message == "Cannot Edit Rejected Applicants.") {
+              console.log("Cannot Edit Rejected Applicants.");
+              getApplicationReports(data.token || "").then((reports) => {
+                console.log("reports",reports)
+                const getShareId = (reports.object as any[]).find(
+                  (item) => item.companyShareId === data.companyShareId
+                );
+
+                if (getShareId) {
+                  const url = `${BASE_URL}/api/meroShare/applicantForm/share/reapply/${getShareId.applicantFormId}`;
+                  const payload = {
+                    appliedKitta: postData.appliedKitta,
+                    companyShareId: postData.companyShareId,
+                    customerId: postData.customerId,
+                    boid: postData.boid,
+                    crnNumber: postData.crnNumber,
+                    bankId: postData.bankId,
+                    accountNumber: postData.accountNumber,
+                    demat: postData.demat,
+                    accountBranchId: postData.accountBranchId,
+                    transactionPIN: postData.transactionPIN,
+                    accountTypeId: postData.accountTypeId,
+                  };
+
+                  fetch(url, {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json, text/plain, */*",
+                      "Content-Type": "application/json",
+                      Authorization: data.token ? data.token : "",
+                    },
+                    body: JSON.stringify(payload),
+                  })
+                    .then((res) => {
+                      const statusCode = res.status;
+                      if (statusCode == 200 || statusCode == 201) {
+                        return res.json().then((resp) => {
+                          resolve(resp);
+                        });
+                      } else {
+                        return res.json().then((resp) => {
+                          reject(resp);
+                        });
+                      }
+                    })
+                    .catch((error) => {
+                      reject(error);
+                    });
+                }
+              }).catch((error) => {
+                reject(error);
+              });
+            }else{
+reject(resp);
+            }
+            
           });
         } else {
           reject("Meroshare Server Failed.");
